@@ -1,0 +1,38 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: bsc
+    source:
+      address: "0x405cff4ce041d3235e8b1f7aaa4e458998a47363"
+      abi: Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ChangeAddressBoss
+        - OwnershipTransferred
+        - Transfer
+        - UpdateBlackList
+        - UpdateWhiteList
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: ChangeAddressBoss(indexed address)
+          handler: handleChangeAddressBoss
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: UpdateBlackList(indexed address,uint8)
+          handler: handleUpdateBlackList
+        - event: UpdateWhiteList(indexed address,uint8)
+          handler: handleUpdateWhiteList
+      file: ./src/contract.ts
